@@ -1,18 +1,23 @@
 window.addEventListener("DOMContentLoaded", () => {
 	const slides = document.querySelectorAll(".item");
 	let initialSlide = 2;
-	
+
 	slides[initialSlide].classList.add("active");
 
-	slides.forEach((slide) => {
-		slide.addEventListener("click", () => {
-			(function clearActiveClasses() {
-				slides.forEach((slide) => {
-					slide.classList.remove("active");
-				});
-			})();
+	slides.forEach((slide, index) => {
+		// slide.addEventListener("click", () => {
+		// 	(function clearActiveClasses() {
+		// 		slides.forEach((slide) => {
+		// 			slide.classList.remove("active");
+		// 		});
+		// 	})();
 
-			slide.classList.add("active");
+		// 	slide.classList.add("active");
+		// });
+
+		slide.addEventListener("click", () => {
+			changeSlide(false, slide);
+			initialSlide = index;
 		});
 	});
 
@@ -23,20 +28,25 @@ window.addEventListener("DOMContentLoaded", () => {
 				initialSlide = slides.length - 1;
 			}
 
-			changeSlide();
+			changeSlide(true);
 		} else if (e.key === "ArrowRight") {
 			initialSlide++;
 			if (initialSlide === slides.length) {
 				initialSlide = 0;
 			}
-			changeSlide();
+			changeSlide(true);
 		}
 	});
 
-	function changeSlide() {
+	function changeSlide(isButton, slide) {
 		slides.forEach((element) => {
 			element.classList.remove("active");
 		});
-		slides[initialSlide].classList.add("active");
+
+		if (isButton) {
+			slides[initialSlide].classList.add("active");
+		} else {
+			slide.classList.add("active");
+		}
 	}
 });
